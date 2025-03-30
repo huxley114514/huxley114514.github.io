@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>huxley的小站</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    /* 新增导航栏样式 */
+    .nav-container {
+      position: fixed;
+      top: 0;
+      left: -250px;
+      width: 250px;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.9);
+      backdrop-filter: blur(15px);
+      z-index: 4;
+      transition: all 0.3s ease;
+    }
+
+    /* 菜单按钮 - 完美正方形设计 */
+    .menu-toggle {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      width: 30px;
+      height: 30px;
+      cursor: pointer;
+      z-index: 5;
+      background: white;
+      border-radius: 4px;
+      padding: 8px 5px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .menu-toggle span {
+      width: 100%;
+      height: 3px;
+      background: black;
+      transition: all 0.3s;
+      display: block;
+    }
+
+    /* 导航栏打开时的菜单按钮样式 */
+    .menu-toggle.active {
+      background: black;
+    }
+    .menu-toggle.active span {
+      background: white;
+    }
+
+    /* 导航栏内容 */
+    .nav-content {
+      padding: 60px 20px 20px;
+    }
+    .nav-btn {
+      display: block;
+      width: 100%;
+      margin: 10px 0;
+      text-align: left;
+      padding: 12px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 8px;
+      color: white;
+      border: none;
+      font-family: inherit;
+      font-weight: bold;
+    }
+
+    /* 调整主容器位置 */
+    .main-container {
+      margin-left: 40px;
+      transition: all 0.3s;
+    }
+
+    /* 全局颜色变量 */
+    :root {
+      --primary: #2196f3;
+      --secondary: #ff4081;
+      --accent: #4CAF50;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: 'Arial Rounded MT Bold', sans-serif;
+      overflow: hidden;
+    }
+
+    #backgroundCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .main-container {
+      position: relative;
+      width: 90%;
+      max-width: 800px;
+      margin: 2rem auto;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(15px);
+      border-radius: 30px;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+      padding: 2rem;
+      z-index: 2;
+    }
+
+    .download-btn {
+      display: inline-block;
+      padding: 1rem 2rem;
+      background: linear-gradient(45deg, var(--primary), var(--secondary));
+      color: white;
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: bold;
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+    }
+    .download-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .game-container {
+      position: relative;
+      margin: 2rem 0;
+      padding: 1rem;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 20px;
+    }
+
+    .overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.9);
+      backdrop-filter: blur(10px);
+      z-index: 3;
+    }
+
+    .panel {
+      position: relative;
+      width: 80%;
+      max-width: 600px;
+      max-height: 70vh;
+      margin: 5% auto;
+      padding: 2rem;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 20px;
+      animation: panelSlide 0.5s ease-out;
+      overflow-y: auto;
+    }
+
+    .panel::-webkit-scrollbar {
+      width: 8px;
+    }
+    .panel::-webkit-scrollbar-track {
+      background: rgba(0,0,0,0.2);
+      border-radius: 4px;
+    }
+    .panel::-webkit-scrollbar-thumb {
+      background: var(--primary);
+      border-radius: 4px;
+    }
+
+    .list-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem;
+      margin: 1rem 0;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 15px;
+      transition: transform 0.3s;
+    }
+
+    /* 新增功能界面样式 */
+    .feature-card {
+      padding: 1.5rem;
+      margin: 1rem 0;
+      background: rgba(255,255,255,0.08);
+      border-radius: 15px;
+      border: 1px solid var(--primary);
+    }
+    .feature-card h3 {
+      color: var(--accent);
+      margin-top: 0;
+    }
+
+    @keyframes panelSlide {
+      from { transform: translateY(-100px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="backgroundCanvas"></canvas>
+
+  <!-- 导航栏 -->
+  <div class="nav-container" id="navContainer">
+    <div class="nav-content">
+      <button class="nav-btn" onclick="showPanel('download')">下载中心</button>
+      <button class="nav-btn" onclick="showPanel('link')">常用网站</button>
+      <button class="nav-btn" onclick="showPanel('new')">新功能</button>
+    </div>
+  </div>
+
+  <!-- 菜单按钮 -->
+  <div class="menu-toggle" id="menuToggle">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <div class="main-container">
+    <h1 style="color: rgb(2, 19, 88); text-align: center;">huxley的小站</h1>
+    
+    <div class="game-container">
+      <canvas id="gameCanvas" width="760" height="400"></canvas>
+      <div id="gameUI" style="position: absolute; top: 20px; left: 20px;">
+        <p style="color: white;">得分: <span id="score">0</span></p>
+        <button id="startBtn" class="download-btn" style="margin-top:10px;">开始游戏</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 下载面板 -->
+  <div class="overlay" id="downloadOverlay">
+    <div class="panel">
+      <h2 style="color: white; text-align: center;">下载中心</h2>
+      <div class="download-list">
+        <div class="list-item">
+          <div>
+            <h3 style="color: var(--primary); margin: 0;">文件生成器 v2.1</h3>
+            <p style="color: #ccc; margin: 5px 0;">大小: 35MB (分卷压缩) | 更新日期: 2023-08-15</p>
+            <p style="color: #ff9800; font-size: 0.9rem;">点击下方按钮自动按顺序下载全部分卷</p>
+          </div>
+          <div>
+            <button id="downloadFileToolsBtn" class="download-btn">下载全部分卷</button>
+          </div>
+        </div>
+
+        <div class="list-item">
+          <div>
+            <h3 style="color: var(--primary); margin: 0;">python3.7.9</h3>
+            <p style="color: #ccc; margin: 5px 0;">大小: 26MB (分卷压缩) | 更新日期: 2022-08-15</p>
+            <p style="color: #ff9800; font-size: 0.9rem;">点击下方按钮自动按顺序下载全部分卷</p>
+          </div>
+          <div>
+            <button id="downloadPythonBtn" class="download-btn">下载全部分卷</button>
+          </div>
+        </div>
+
+        <div class="list-item">
+          <div>
+            <h3 style="color: var(--primary); margin: 0;">py代码 v2.1</h3>
+            <p style="color: #ccc; margin: 5px 0;">大小: 91字节 | 更新日期: 2025-2-22</p>
+          </div>
+          <a href="downloads/kill_py.zip" class="download-btn" download>下载</a>
+        </div>
+      </div>
+      <button class="download-btn" onclick="hidePanels()" style="margin-top: 1rem;">关闭</button>
+    </div>
+  </div>
+
+  <!-- 网站跳转面板 -->
+  <div class="overlay" id="linkOverlay">
+    <div class="panel">
+      <h2 style="color: white; text-align: center;">常用网站</h2>
+
+      <div class="link-list">
+        <div class="list-item">
+          <div>
+            <h3 style="color: var(--primary); margin: 0;">GitHub</h3>
+            <p style="color: #ccc; margin: 5px 0;">代码托管平台</p>
+          </div>
+          <a href="https://github.com" class="download-btn" target="_blank">跳转</a>
+        </div>
+
+        <div class="list-item">
+          <div>
+            <h3 style="color: var(--primary); margin: 0;">DeepSeek</h3>
+            <p style="color: #ccc; margin: 5px 0;">智能搜索引擎</p>
+          </div>
+          <a href="https://www.deepseek.com/" class="download-btn" target="_blank">跳转</a>
+        </div>
+
+        <div class="list-item">
+          <div>
+            <h3 style="color: var(--primary); margin: 0;">4399</h3>
+            <p style="color: #ccc; margin: 5px 0;">小游戏平台</p>
+          </div>
+          <a href="https://www.4399.com/" class="download-btn" target="_blank">跳转</a>
+        </div>
+      </div>
+      <button class="download-btn" onclick="hidePanels()" style="margin-top: 1rem;">关闭</button>
+    </div>
+  </div>
+
+  <!-- 新功能面板 -->
+  <div class="overlay" id="newOverlay">
+    <div class="panel">
+      <h2 style="color: white; text-align: center;">最新特性</h2>
+      
+      <div class="feature-card">
+        <h3>✨ 动态主题系统</h3>
+        <p style="color: #ccc;">支持切换多种配色方案</p>
+        <div style="margin-top: 1rem;">
+          <button class="download-btn" onclick="changeTheme('default')">默认</button>
+          <button class="download-btn" onclick="changeTheme('dark')">暗黑</button>
+          <button class="download-btn" onclick="changeTheme('forest')">森林</button>
+        </div>
+      </div>
+
+      <button class="download-btn" onclick="hidePanels()" style="margin-top: 1rem;">关闭</button>
+    </div>
+  </div>
+
+  <script>
+    // 导航栏控制
+    const navContainer = document.getElementById('navContainer');
+    const menuToggle = document.getElementById('menuToggle');
+
+    function toggleNav() {
+      const isOpen = navContainer.style.left === '0px';
+      navContainer.style.left = isOpen ? '-250px' : '0px';
+      menuToggle.classList.toggle('active');
+    }
+
+    menuToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      toggleNav();
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!navContainer.contains(e.target) && !menuToggle.contains(e.target)) {
+        navContainer.style.left = '-250px';
+        menuToggle.classList.remove('active');
+      }
+    });
+
+    // 背景系统
+    class BackgroundSystem {
+      constructor() {
+        this.canvas = document.getElementById('backgroundCanvas');
+        this.ctx = this.canvas.getContext('2d');
+        this.points = [];
+        this.mouse = { x: -1000, y: -1000 };
+        this.init();
+        this.animate();
+      }
+
+      init() {
+        this.resize();
+        window.addEventListener('resize', () => this.resize());
+        window.addEventListener('mousemove', (e) => {
+          this.mouse.x = e.clientX;
+          this.mouse.y = e.clientY;
+        });
+
+        for(let i = 0; i < 200; i++) {
+          this.points.push({
+            x: Math.random() * this.canvas.width,
+            y: Math.random() * this.canvas.height,
+            vx: (Math.random() - 0.5) * 0.3,
+            vy: (Math.random() - 0.5) * 0.3,
+            radius: Math.random() * 2 + 1
+          });
+        }
+      }
+
+      resize() {
+        this.canvas.width = window.innerWidth;
+        this.canvas.height = window.innerHeight;
+      }
+
+      animate() {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        
+        this.points.forEach((point, index) => {
+          point.x += point.vx;
+          point.y += point.vy;
+          
+          if(point.x < 0 || point.x > this.canvas.width) point.vx *= -1;
+          if(point.y < 0 || point.y > this.canvas.height) point.vy *= -1;
+
+          this.ctx.beginPath();
+          this.ctx.arc(point.x, point.y, point.radius, 0, Math.PI * 2);
+          this.ctx.fillStyle = `rgba(150, 150, 150, 0.2)`;
+          this.ctx.fill();
+
+          for(let j = index + 1; j < this.points.length; j++) {
+            const other = this.points[j];
+            const distance = Math.hypot(point.x - other.x, point.y - other.y);
+            if(distance < 100) {
+              this.ctx.beginPath();
+              this.ctx.moveTo(point.x, point.y);
+              this.ctx.lineTo(other.x, other.y);
+              this.ctx.strokeStyle = `rgba(150, 150, 150, ${1 - distance/100})`;
+              this.ctx.lineWidth = 0.5;
+              this.ctx.stroke();
+            }
+          }
+
+          const mouseDistance = Math.hypot(point.x - this.mouse.x, point.y - this.mouse.y);
+          if(mouseDistance < 200) {
+            this.ctx.beginPath();
+            this.ctx.moveTo(point.x, point.y);
+            this.ctx.lineTo(this.mouse.x, this.mouse.y);
+            this.ctx.strokeStyle = `rgba(150, 150, 150, ${1 - mouseDistance/200})`;
+            this.ctx.lineWidth = 0.8;
+            this.ctx.stroke();
+          }
+        });
+
+        requestAnimationFrame(() => this.animate());
+      }
+    }
+
+    // 贪吃蛇游戏
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+    const GRID_SIZE = 20;
+    const COLS = Math.floor(canvas.width / GRID_SIZE);
+    const ROWS = Math.floor(canvas.height / GRID_SIZE);
+    let snake = [];
+    let food = {};
+    let direction = 'right';
+    let nextDirection = 'right';
+    let score = 0;
+    let isPlaying = false;
+    let gameLoopId;
+
+    function initGame() {
+      snake = [{x: 200, y: 200}];
+      direction = 'right';
+      nextDirection = 'right';
+      score = 0;
+      spawnFood();
+      isPlaying = true;
+      document.getElementById('score').textContent = score;
+    }
+
+    function spawnFood() {
+      // 确保食物生成在网格内
+      food = {
+        x: Math.floor(Math.random() * COLS) * GRID_SIZE,
+        y: Math.floor(Math.random() * ROWS) * GRID_SIZE
+      };
+      
+      // 检查食物是否与蛇身重叠
+      for(let segment of snake) {
+        if(food.x === segment.x && food.y === segment.y) {
+          return spawnFood(); // 如果重叠则重新生成
+        }
+      }
+    }
+
+    function update() {
+      if(!isPlaying) return;
+      direction = nextDirection;
+      const head = {...snake[0]};
+      
+      switch(direction) {
+        case 'up': head.y -= GRID_SIZE; break;
+        case 'down': head.y += GRID_SIZE; break;
+        case 'left': head.x -= GRID_SIZE; break;
+        case 'right': head.x += GRID_SIZE; break;
+      }
+
+      // 精确边界检测
+      if(head.x < 0 || head.x >= canvas.width || head.y < 0 || head.y >= canvas.height) {
+        gameOver();
+        return;
+      }
+
+      // 检查是否撞到自己
+      for(let segment of snake) {
+        if(head.x === segment.x && head.y === segment.y) {
+          gameOver();
+          return;
+        }
+      }
+
+      snake.unshift(head);
+      if(head.x === food.x && head.y === food.y) {
+        score += 10;
+        document.getElementById('score').textContent = score;
+        spawnFood();
+      } else {
+        snake.pop();
+      }
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      ctx.fillStyle = '#ff4081';
+      ctx.fillRect(food.x, food.y, GRID_SIZE-2, GRID_SIZE-2);
+
+      snake.forEach((segment, index) => {
+        ctx.fillStyle = index === 0 ? '#4CAF50' : '#2196f3';
+        ctx.fillRect(segment.x, segment.y, GRID_SIZE-2, GRID_SIZE-2);
+      });
+    }
+
+    function gameLoop() {
+      update();
+      draw();
+      if(isPlaying) {
+        gameLoopId = setTimeout(() => requestAnimationFrame(gameLoop), 200);
+      }
+    }
+
+    function gameOver() {
+      isPlaying = false;
+      cancelAnimationFrame(gameLoopId);
+      alert(`游戏结束！得分：${score}`);
+    }
+
+    // 事件监听
+    document.addEventListener('keydown', (e) => {
+      switch(e.key) {
+        case 'ArrowUp': if(direction !== 'down') nextDirection = 'up'; break;
+        case 'ArrowDown': if(direction !== 'up') nextDirection = 'down'; break;
+        case 'ArrowLeft': if(direction !== 'right') nextDirection = 'left'; break;
+        case 'ArrowRight': if(direction !== 'left') nextDirection = 'right'; break;
+      }
+    });
+
+    document.getElementById('startBtn').addEventListener('click', () => {
+      if(!isPlaying) {
+        initGame();
+        gameLoop();
+      }
+    });
+
+    // 面板控制
+    function showPanel(type) {
+      hidePanels();
+      document.getElementById(`${type}Overlay`).style.display = 'block';
+      navContainer.style.left = '-250px';
+      menuToggle.classList.remove('active');
+    }
+
+    function hidePanels() {
+      document.querySelectorAll('.overlay').forEach(panel => {
+        panel.style.display = 'none';
+      });
+    }
+
+    // 主题切换功能
+    function changeTheme(theme) {
+      const root = document.documentElement;
+      switch(theme) {
+        case 'dark':
+          root.style.setProperty('--primary', '#673ab7');
+          root.style.setProperty('--secondary', '#e91e63');
+          root.style.setProperty('--accent', '#8bc34a');
+          break;
+        case 'forest':
+          root.style.setProperty('--primary', '#4CAF50');
+          root.style.setProperty('--secondary', '#8bc34a');
+          root.style.setProperty('--accent', '#cddc39');
+          break;
+        default:
+          root.style.setProperty('--primary', '#2196f3');
+          root.style.setProperty('--secondary', '#ff4081');
+          root.style.setProperty('--accent', '#4CAF50');
+      }
+    }
+
+    // 下载功能
+    document.getElementById('downloadFileToolsBtn').addEventListener('click', function() {
+      const files = [
+        'downloads/file_tools.zip.001',
+        'downloads/file_tools.zip.002'
+      ];
+      downloadFiles(files);
+    });
+
+    document.getElementById('downloadPythonBtn').addEventListener('click', function() {
+      const files = [
+        'downloads/python-3.7.9-amd64.zip.001',
+        'downloads/python-3.7.9-amd64.zip.002'
+      ];
+      downloadFiles(files);
+    });
+
+    function downloadFiles(files) {
+      function downloadNext(index) {
+        if (index >= files.length) {
+          alert('所有分卷下载完成！请解压第一个文件。');
+          return;
+        }
+        const link = document.createElement('a');
+        link.href = files[index];
+        link.download = files[index].split('/').pop();
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        setTimeout(() => downloadNext(index + 1), 1000);
+      }
+      downloadNext(0);
+    }
+
+    // 初始化
+    new BackgroundSystem();
+  </script>
+</body>
+</html>

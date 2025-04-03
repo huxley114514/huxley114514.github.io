@@ -460,10 +460,24 @@
 
         <div class="list-item">
           <div>
-            <h3 style="color: var(--primary); margin: 0;">python v3.7.9</h3>
-            <p style="color: #ccc; margin: 5px 0;">大小: 25MB | 更新日期: 2020</p>
+            <h3 style="color: var(--primary); margin: 0;">python3.7.9</h3>
+            <p style="color: #ccc; margin: 5px 0;">大小: 30MB (分卷压缩)</p>
+            <p style="color: #ff9800; font-size: 0.9rem;">点击下方按钮自动按顺序下载全部分卷</p>
           </div>
-          <a href="./downloads/python-3.7.9-amd64.exe" class="download-btn" download>下载</a>
+          <div>
+            <button id="downloadpyBtn" class="download-btn">下载全部分卷</button>
+          </div>
+        </div>
+
+        <div class="list-item">
+          <div>
+            <h3 style="color: var(--primary); margin: 0;">VScode_win11</h3>
+            <p style="color: #ccc; margin: 5px 0;">大小: 105MB (分卷压缩)</p>
+            <p style="color: #ff9800; font-size: 0.9rem;">点击下方按钮自动按顺序下载全部分卷</p>
+          </div>
+          <div>
+            <button id="downloadVScodeBtn" class="download-btn">下载全部分卷</button>
+          </div>
         </div>
 
         <div class="list-item">
@@ -507,6 +521,15 @@
           </div>
           <a href="https://www.4399.com/" class="download-btn" target="_blank">跳转</a>
         </div>
+
+        <div class="list-item">
+          <div>
+            <h3 style="color: var(--primary); margin: 0;">win解压缩</h3>
+            <p style="color: #ccc; margin: 5px 0;">win解压缩官网</p>
+          </div>
+          <a href="https://wyouhua.com/winzip" class="download-btn" target="_blank">跳转</a>
+        </div>
+
       </div>
       <button class="download-btn" onclick="hidePanels()" style="margin-top: 1rem; display: block; margin-left: auto; margin-right: auto;">关闭</button>
     </div>
@@ -892,11 +915,28 @@
         .catch(err => console.error('复制失败:', err));
     }
 
-    // Multi-part file download
+    // 下载清单
     document.getElementById('downloadFileToolsBtn').addEventListener('click', function() {
       const files = [
-        './downloads/file_tools.zip.001',
-        './downloads/file_tools.zip.002'
+        './downloads/file_tools/file_tools.zip.001',
+        './downloads/file_tools/file_tools.zip.002'
+      ];
+      downloadFiles(files);
+    });
+    document.getElementById('downloadpyBtn').addEventListener('click', function() {
+      const files = [
+        './downloads/python-3.7.9-amd64/python-3.7.9-amd64.zip.001',
+        './downloads/python-3.7.9-amd64/python-3.7.9-amd64.zip.002'
+      ];
+      downloadFiles(files);
+    });
+    document.getElementById('downloadVScodeBtn').addEventListener('click', function() {
+      const files = [
+        './downloads/VSCodeUserSetup-x64-1.98.2/VSCodeUserSetup-x64-1.98.2.zip.001',
+        './downloads/VSCodeUserSetup-x64-1.98.2/VSCodeUserSetup-x64-1.98.2.zip.002',
+        './downloads/VSCodeUserSetup-x64-1.98.2/VSCodeUserSetup-x64-1.98.2.zip.003',
+        './downloads/VSCodeUserSetup-x64-1.98.2/VSCodeUserSetup-x64-1.98.2.zip.004',
+        './downloads/VSCodeUserSetup-x64-1.98.2/VSCodeUserSetup-x64-1.98.2.zip.005'
       ];
       downloadFiles(files);
     });

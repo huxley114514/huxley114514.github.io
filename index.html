@@ -402,12 +402,22 @@
       
       <!-- 游戏链接（下方） -->
       <div style="text-align: center; margin-top: 20px;">
-        <a href="https://huxley114514.github.io/game/game1" 
+        <a href="https://huxley114514.github.io/game/Dig-into-the-ground-for-ascension.html " 
           class="download-btn" 
           target="_blank">
           游玩掘地求升
         </a>
       </div>
+
+      <div style="text-align: center; margin-top: 20px;">
+        <a href="https://huxley114514.github.io/game/Apple.html " 
+          class="download-btn" 
+          target="_blank">
+          游玩apple
+        </a>
+      </div>
+
+      
     </div>
   </div>
 
@@ -798,7 +808,7 @@
 
       // 绘制蛇
       snake.forEach((segment, index) => {
-        gameCtx.fillStyle = index === 0 ? '#4CAF50' : '#2196f3'; // Head is green, body is blue
+        gameCtx.fillStyle = index === 0 ? '#4CAF50' : '#2196f3'; // 头绿身蓝
         gameCtx.fillRect(segment.x, segment.y, GRID_SIZE-2, GRID_SIZE-2);
       });
     }

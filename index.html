@@ -6,16 +6,16 @@
   <style>
     /* ===== 主色调 ===== */
     :root {
-      --primary: #2196f3;       /* Main blue color */
-      --secondary: #ff4081;     /* Pink accent color */
-      --accent: #4CAF50;        /* Green accent color */
-      --bg-color: rgba(255, 255, 255, 0.1);  /* Semi-transparent white background */
-      --text-color: #000;       /* Default text color */
-      --nav-bg: rgba(0, 0, 0, 0.9); /* Navigation background */
-      --panel-bg: rgba(255, 255, 255, 0.15); /* Panel background */
+      --primary: #2196f3;       /* 主蓝色 */
+      --secondary: #ff4081;     /* 粉色强调色 */
+      --accent: #4CAF50;        /* 绿色强调色 */
+      --bg-color: rgba(255, 255, 255, 0.1);  /* 半透明白色背景 */
+      --text-color: #000;       /* 默认文本颜色 */
+      --nav-bg: rgba(0, 0, 0, 0.9); /* 导航背景 */
+      --panel-bg: rgba(255, 255, 255, 0.15); /* 面板背景 */
     }
 
-    /* ===== BASE STYLES ===== */
+    /* ===== 基础样式 ===== */
     body {
       margin: 0;
       min-height: 100vh;
@@ -26,7 +26,7 @@
       transition: background 0.3s ease, color 0.3s ease;
     }
 
-    /* ===== BACKGROUND CANVAS ===== */
+    /* ===== 背景画布 ===== */
     #backgroundCanvas {
       position: fixed;
       top: 0;
@@ -34,10 +34,10 @@
       width: 100%;
       height: 100%;
       z-index: 0;
-      pointer-events: none; /* Prevent canvas from blocking mouse events */
+      pointer-events: none; /* 防止画布阻挡鼠标事件 */
     }
 
-    /* ===== MAIN CONTENT CONTAINER ===== */
+    /* ===== 主内容容器 ===== */
     .main-container {
       position: relative;
       width: 90%;
@@ -54,7 +54,7 @@
 
     /* ===== ABOUT PAGE CONTAINER ===== */
     .about-container {
-      display: none; /* Hidden by default */
+      display: none; /* 默认隐藏 */
       position: relative;
       width: 90%;
       max-width: 800px;
@@ -67,22 +67,22 @@
       z-index: 2;
     }
 
-    /* ===== NAVIGATION ===== */
+    /* ===== 导航栏 ===== */
     .nav-container {
       position: fixed;
       top: 0;
-      left: -250px; /* Initially hidden off-screen */
+      left: -250px; /* 初始位置在屏幕外 */
       width: 250px;
       height: 100vh;
       background: var(--nav-bg);
       backdrop-filter: blur(15px);
       z-index: 4;
       transition: all 0.3s ease;
-      overflow-y: auto; /* Enable scrolling if content exceeds height */
+      overflow-y: auto; /* 如果内容超出高度则启用滚动 */
     }
 
     .nav-content {
-      padding: 60px 20px 20px; /* Extra padding at top for menu button */
+      padding: 60px 20px 20px; /* 顶部额外内边距用于菜单按钮 */
     }
 
     .nav-btn {
@@ -101,10 +101,10 @@
       transition: transform 0.2s;
     }
     .nav-btn:hover {
-      transform: translateX(5px); /* Subtle hover effect */
+      transform: translateX(5px); /* 微妙的悬停效果 */
     }
 
-    /* ===== MENU TOGGLE BUTTON ===== */
+    /* ===== 菜单切换按钮 ===== */
     .menu-toggle {
       position: fixed;
       top: 20px;
@@ -136,7 +136,7 @@
       background: white;
     }
 
-    /* ===== BUTTON STYLES ===== */
+    /* ===== 按钮样式 ===== */
     .download-btn {
       display: inline-block;
       padding: 1rem 2rem;
@@ -154,7 +154,7 @@
       box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
     }
 
-    /* ===== GAME CONTAINER ===== */
+    /* ===== 游戏容器 ===== */
     .game-container {
       position: relative;
       margin: 2rem 0;
@@ -163,7 +163,7 @@
       border-radius: 20px;
     }
 
-    /* ===== GAME CONTROL BUTTONS ===== */
+    /* ===== 游戏控制按钮 ===== */
     .game-controls-container {
       position: absolute;
       right: 20px;  /* 从右侧定位 */
@@ -180,7 +180,7 @@
       text-align: center;
     }
 
-    /* ===== OVERLAY STYLES ===== */
+    /* ===== 遮罩层样式 ===== */
     .overlay {
       display: none;
       position: fixed;
@@ -193,7 +193,7 @@
       z-index: 3;
     }
 
-    /* ===== PANEL STYLES ===== */
+    /* ===== 面板样式 ===== */
     .panel {
       position: relative;
       width: 80%;
@@ -218,7 +218,7 @@
       border-radius: 4px;
     }
 
-    /* ===== LIST ITEMS ===== */
+    /* ===== 列表项 ===== */
     .list-item {
       display: flex;
       justify-content: space-between;
@@ -233,7 +233,7 @@
       transform: scale(1.02);
     }
 
-    /* ===== FEATURE CARDS ===== */
+    /* ===== 功能卡片 ===== */
     .feature-card {
       padding: 1.5rem;
       margin: 1rem 0;
@@ -246,7 +246,7 @@
       margin-top: 0;
     }
 
-    /* ===== MOBILE CONTROLS ===== */
+    /* ===== 移动端控件 ===== */
     .mobile-controls {
       display: none;
       grid-template-columns: repeat(3, 1fr);
@@ -267,7 +267,7 @@
       background: rgba(255,255,255,0.3);
     }
 
-    /* ===== RESPONSIVE DESIGN ===== */
+    /* ===== 响应式设计 ===== */
     @media (max-width: 768px) {
       .mobile-controls {
         display: grid;
@@ -281,7 +281,7 @@
       }
     }
 
-    /* ===== ANIMATIONS ===== */
+    /* ===== 动画效果 ===== */
     @keyframes panelSlide {
       from { transform: translateY(-100px); opacity: 0; }
       to { transform: translateY(0); opacity: 1; }
@@ -289,10 +289,10 @@
   </style>
 </head>
 <body>
-  <!-- BACKGROUND CANVAS -->
+  <!-- 背景画布 -->
   <canvas id="backgroundCanvas"></canvas>
 
-  <!-- NAVIGATION MENU -->
+  <!-- 导航栏菜单 -->
   <div class="nav-container" id="navContainer">
     <div class="nav-content">
       <button class="nav-btn" onclick="showPanel('home')">首页</button>
@@ -304,20 +304,20 @@
     </div>
   </div>
 
-  <!-- MENU TOGGLE BUTTON -->
+  <!-- 菜单切换按钮 -->
   <div class="menu-toggle" id="menuToggle">
     <span></span>
     <span></span>
     <span></span>
   </div>
 
-  <!-- MAIN CONTENT -->
+  <!-- 主内容区 -->
   <div class="main-container" id="mainContent">
     <h1 style="color: rgb(2, 19, 88); text-align: center;">huxley的小站</h1>
     <p style="text-align: center;">欢迎来到我的个人网站</p>
   </div>
 
-  <!-- ABOUT ME PAGE -->
+  <!-- 关于我页面 -->
   <div class="about-container" id="aboutContent">
     <h1 style="color: var(--primary); text-align: center;">关于我</h1>
     
@@ -343,7 +343,7 @@
       <div>
         <h3 style="color: var(--secondary); margin: 0 0 5px 0;">邮箱</h3>
         <p style="margin: 0;">3772642249@qq.com</p>
-        <p style="margin: 0; font-size: 0.9em; color: #aaa;">工作联系</p>
+        <p style="margin: 0; font-size: 0.9em; color: #aaa;">联系</p>
       </div>
       <button class="download-btn" onclick="copyEmail()">复制</button>
     </div>
@@ -352,7 +352,7 @@
       <div>
         <h3 style="color: var(--secondary); margin: 0 0 5px 0;">技能</h3>
         <p style="margin: 0;">HTML</p>
-        <p style="margin: 0;">Python/c++</p>
+        <p style="margin: 0;">Python/C++</p>
       </div>
     </div>
     
@@ -377,7 +377,7 @@
       
       <!-- 游戏画布容器 -->
       <div class="game-container">
-        <canvas id="gameCanvas" width="580" height="400"></canvas>
+        <canvas id="gameCanvas"></canvas>
         
         <!-- 游戏UI（得分显示） -->
         <div id="gameUI" style="position: absolute; top: 20px; left: 20px;">
@@ -402,7 +402,7 @@
       
       <!-- 游戏链接（下方） -->
       <div style="text-align: center; margin-top: 20px;">
-        <a href="https://huxley114514.github.io/game/game1.html" 
+        <a href="https://huxley114514.github.io/game/game1" 
           class="download-btn" 
           target="_blank">
           游玩掘地求升
@@ -412,9 +412,23 @@
   </div>
 
   <style>
-  /* 手机控制按钮样式（确保这些样式存在） */
+  /* 游戏容器和画布基础样式 */
+  .game-container {
+    position: relative;
+    width: 540px;
+    margin: 0 auto;
+  }
+
+  .game-container canvas {
+    width: 100%;
+    height: 400px;
+    display: block;
+    background: #000; /* 临时背景色，方便查看 */
+  }
+
+  /* 手机控制按钮样式 */
   .mobile-controls {
-    display: none; /* 默认隐藏，在移动端显示 */
+    display: none;
   }
 
   .control-btn {
@@ -433,15 +447,56 @@
     background: rgba(255,255,255,0.3);
   }
 
-  /* 响应式设计 - 手机端显示控制按钮 */
+  /* 响应式设计 - 手机端 */
   @media (max-width: 768px) {
+    .game-container {
+      width: 340px;
+    }
+    
     .mobile-controls {
       display: block !important;
     }
   }
   </style>
 
-  <!-- DOWNLOAD CENTER PANEL -->
+  <script>
+  // 页面加载时设置画布尺寸
+  function initGameCanvas() {
+    const canvas = document.getElementById('gameCanvas');
+    const container = document.querySelector('.game-container');
+    
+    // 根据设备设置不同尺寸
+    if (window.innerWidth <= 768) { // 手机
+      canvas.width = 340;
+      canvas.height = 400;
+    } else { // 电脑
+      canvas.width = 540;
+      canvas.height = 400;
+    }
+    
+    // 如果有游戏逻辑，这里初始化
+    // initGame();
+  }
+
+  // 窗口大小改变时重新设置
+  function handleResize() {
+    initGameCanvas();
+    // 如果有游戏逻辑，这里可能需要重绘
+    // redrawGame();
+  }
+
+  // 添加事件监听
+  window.addEventListener('load', initGameCanvas);
+  window.addEventListener('resize', handleResize);
+
+  // 手机控制函数
+  function handleControl(direction) {
+    // 你的控制逻辑
+    console.log('控制方向:', direction);
+  }
+  </script>
+
+<!-- 下载中心面板 -->
   <div class="overlay" id="downloadOverlay">
     <div class="panel">
       <h2 style="color: white; text-align: center;">下载中心</h2>
@@ -491,7 +546,7 @@
     </div>
   </div>
 
-  <!-- LINKS PANEL -->
+  <!-- 常用链接面板 -->
   <div class="overlay" id="linkOverlay">
     <div class="panel">
       <h2 style="color: white; text-align: center;">常用网站</h2>
@@ -534,7 +589,7 @@
     </div>
   </div>
 
-  <!-- PERSONALIZATION PANEL -->
+  <!-- 个性化设置面板 -->
   <div class="overlay" id="newOverlay">
     <div class="panel">
       <h2 style="color: white; text-align: center;">个性化设置</h2>
@@ -563,13 +618,13 @@
   </div>
 
   <script>
-    /* ===== BACKGROUND SYSTEM ===== */
+    /* ===== 背景系统 ===== */
     class BackgroundSystem {
       constructor() {
         this.canvas = document.getElementById('backgroundCanvas');
         this.ctx = this.canvas.getContext('2d');
         this.points = [];
-        this.mouse = { x: -1000, y: -1000 }; // Initialize off-screen
+        this.mouse = { x: -1000, y: -1000 }; // 初始位置在屏幕外
         this.init();
         this.animate();
       }
@@ -582,7 +637,7 @@
           this.mouse.y = e.clientY;
         });
 
-        // Create 200 particles with random positions and velocities
+        // 创建200个带随机位置和速度的粒子
         for(let i = 0; i < 200; i++) {
           this.points.push({
             x: Math.random() * this.canvas.width,
@@ -602,23 +657,23 @@
       animate() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         
-        // Update and draw each particle
+        // 更新并绘制每个粒子
         this.points.forEach((point, index) => {
-          // Update position
+          // 更新位置
           point.x += point.vx;
           point.y += point.vy;
           
-          // Bounce off edges
+          // 边缘反弹
           if(point.x < 0 || point.x > this.canvas.width) point.vx *= -1;
           if(point.y < 0 || point.y > this.canvas.height) point.vy *= -1;
 
-          // Draw particle
+          // 绘制粒子
           this.ctx.beginPath();
           this.ctx.arc(point.x, point.y, point.radius, 0, Math.PI * 2);
           this.ctx.fillStyle = `rgba(150, 150, 150, 0.2)`;
           this.ctx.fill();
 
-          // Draw connections between nearby particles
+          // 绘制相邻粒子间的连接线
           for(let j = index + 1; j < this.points.length; j++) {
             const other = this.points[j];
             const distance = Math.hypot(point.x - other.x, point.y - other.y);
@@ -632,7 +687,7 @@
             }
           }
 
-          // Draw connection to mouse
+          // 绘制与鼠标的连接线
           const mouseDistance = Math.hypot(point.x - this.mouse.x, point.y - this.mouse.y);
           if(mouseDistance < 200) {
             this.ctx.beginPath();
@@ -648,23 +703,23 @@
       }
     }
 
-    /* ===== SNAKE GAME ===== */
+    /* ===== 贪吃蛇游戏 ===== */
     const gameCanvas = document.getElementById('gameCanvas');
     const gameCtx = gameCanvas.getContext('2d');
     const GRID_SIZE = 20;
     const COLS = Math.floor(gameCanvas.width / GRID_SIZE);
     const ROWS = Math.floor(gameCanvas.height / GRID_SIZE);
-    let snake = [];      // Array to store snake segments
-    let food = {};       // Food object
-    let direction = 'right'; // Current direction
-    let nextDirection = 'right'; // Next direction (to prevent instant 180 turns)
-    let score = 0;       // Player score
-    let isPlaying = false; // Game state
-    let gameLoopId;      // Game loop ID for cancellation
+    let snake = [];      // 存储蛇身体段的数组
+    let food = {};       // 食物对象
+    let direction = 'right'; // 当前方向
+    let nextDirection = 'right'; // 下一个方向（防止立即180度转向）
+    let score = 0;       // 玩家分数
+    let isPlaying = false; // 游戏状态
+    let gameLoopId;      // 用于取消的游戏循环ID
 
-    // Initialize game state
+    // 初始化游戏状态
     function initGame() {
-      snake = [{x: 200, y: 200}]; // Initial snake position
+      snake = [{x: 200, y: 200}]; // 初始蛇位置
       direction = 'right';
       nextDirection = 'right';
       score = 0;
@@ -673,30 +728,30 @@
       document.getElementById('score').textContent = score;
     }
 
-    // Create food at random position
+    // 在随机位置创建食物
     function spawnFood() {
       food = {
         x: Math.floor(Math.random() * COLS) * GRID_SIZE,
         y: Math.floor(Math.random() * ROWS) * GRID_SIZE
       };
       
-      // Ensure food doesn't spawn on snake
+      // 确保食物不会出现在蛇身上
       for(let segment of snake) {
         if(food.x === segment.x && food.y === segment.y) {
-          return spawnFood(); // Recursively try again
+          return spawnFood(); // 重新随机位置
         }
       }
     }
 
-    // Update game state
+    // 更新游戏状态
     function update() {
       if(!isPlaying) return;
       
-      // Update direction
+      // 更新方向
       direction = nextDirection;
       
-      // Create new head based on current direction
-      const head = {...snake[0]}; // Copy head
+      // 根据当前方向创建新头部
+      const head = {...snake[0]}; // 复制头部
       
       switch(direction) {
         case 'up': head.y -= GRID_SIZE; break;
@@ -705,14 +760,14 @@
         case 'right': head.x += GRID_SIZE; break;
       }
 
-      // Check wall collision
+      // 检查墙壁碰撞
       if(head.x < 0 || head.x >= gameCanvas.width || 
          head.y < 0 || head.y >= gameCanvas.height) {
         gameOver();
         return;
       }
 
-      // Check self collision
+      // 检查蛇身碰撞
       for(let segment of snake) {
         if(head.x === segment.x && head.y === segment.y) {
           gameOver();
@@ -720,69 +775,69 @@
         }
       }
 
-      // Move snake
+      // 移动蛇
       snake.unshift(head);
       
-      // Check food collision
+      // 检查食物碰撞
       if(head.x === food.x && head.y === food.y) {
         score += 10;
         document.getElementById('score').textContent = score;
         spawnFood();
       } else {
-        snake.pop(); // Remove tail if no food eaten
+        snake.pop(); // 如果未吃到食物则移除尾部
       }
     }
 
-    // Render game
+    // 运行游戏
     function draw() {
       gameCtx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
       
-      // Draw food
+      // 绘制食物
       gameCtx.fillStyle = '#ff4081';
       gameCtx.fillRect(food.x, food.y, GRID_SIZE-2, GRID_SIZE-2);
 
-      // Draw snake
+      // 绘制蛇
       snake.forEach((segment, index) => {
         gameCtx.fillStyle = index === 0 ? '#4CAF50' : '#2196f3'; // Head is green, body is blue
         gameCtx.fillRect(segment.x, segment.y, GRID_SIZE-2, GRID_SIZE-2);
       });
     }
 
-    // Main game loop
+    // 主游戏循环
     function gameLoop() {
       update();
       draw();
       if(isPlaying) {
-        // Control game speed (200ms per frame)
+        // 控制游戏速度（每帧200毫秒）
         gameLoopId = setTimeout(() => requestAnimationFrame(gameLoop), 200);
       }
     }
 
-    // End game
+    // 结束游戏
     function gameOver() {
       isPlaying = false;
       cancelAnimationFrame(gameLoopId);
       alert(`游戏结束！得分：${score}`);
     }
 
-    /* ===== NAVIGATION CONTROL ===== */
+    /* ===== 导航控制 ===== */
     const navContainer = document.getElementById('navContainer');
     const menuToggle = document.getElementById('menuToggle');
 
-    // Toggle navigation menu
+    // 切换导航菜单
     function toggleNav() {
       const isOpen = navContainer.style.left === '0px';
       navContainer.style.left = isOpen ? '-250px' : '0px';
       menuToggle.classList.toggle('active');
     }
 
-    // Menu button click handler
+    // 菜单按钮点击处理
     menuToggle.addEventListener('click', (e) => {
       e.stopPropagation();
       toggleNav();
     });
 
-    // Close menu when clicking outside
+    // 点击外部时关闭菜单
     document.addEventListener('click', (e) => {
       if (!navContainer.contains(e.target) && !menuToggle.contains(e.target)) {
         navContainer.style.left = '-250px';
@@ -790,8 +845,8 @@
       }
     });
 
-    /* ===== GAME CONTROL HANDLERS ===== */
-    // Keyboard controls
+    /* ===== 游戏控制处理器 ===== */
+    // 键盘控制
     document.addEventListener('keydown', (e) => {
       switch(e.key) {
         case 'ArrowUp': if(direction !== 'down') nextDirection = 'up'; break;
@@ -801,14 +856,14 @@
       }
     });
 
-    // Mobile control buttons
+    // 移动端控制按钮
     function handleControl(dir) {
       if(['up','down','left','right'].includes(dir)) {
         nextDirection = dir;
       }
     }
 
-    // Start game button
+    // 开始游戏按钮
     document.getElementById('startBtn').addEventListener('click', () => {
       if(!isPlaying) {
         initGame();
@@ -816,8 +871,8 @@
       }
     });
 
-    /* ===== PANEL CONTROL ===== */
-    // Show specific panel
+    /* ===== 面板控制 ===== */
+    // 显示特定面板
     function showPanel(type) {
       hidePanels();
       const mainContent = document.getElementById('mainContent');
@@ -837,12 +892,12 @@
         aboutContent.style.display = 'none';
       }
       
-      // Close navigation menu
+      // 关闭导航菜单
       navContainer.style.left = '-250px';
       menuToggle.classList.remove('active');
     }
 
-    // Hide all panels and show main content
+    // 隐藏所有面板并显示主内容
     function hidePanels() {
       document.querySelectorAll('.overlay').forEach(panel => {
         panel.style.display = 'none';
@@ -851,8 +906,8 @@
       document.getElementById('aboutContent').style.display = 'none';
     }
 
-    /* ===== THEME SYSTEM ===== */
-    // Change color theme
+    /* ===== 主题系统 ===== */
+    // 更改按钮颜色主题
     function changeTheme(theme) {
       const root = document.documentElement;
       switch(theme) {
@@ -866,14 +921,14 @@
           root.style.setProperty('--secondary', '#8bc34a');
           root.style.setProperty('--accent', '#cddc39');
           break;
-        default: // Default theme
+        default: // 默认主题
           root.style.setProperty('--primary', '#2196f3');
           root.style.setProperty('--secondary', '#ff4081');
           root.style.setProperty('--accent', '#4CAF50');
       }
     }
 
-    // Toggle light/dark mode
+    // 亮/暗色
     function toggleDarkMode(mode) {
       const root = document.documentElement;
       
@@ -906,8 +961,8 @@
       }
     }
 
-    /* ===== UTILITY FUNCTIONS ===== */
-    // Copy email to clipboard
+    /* ===== 实用功能 ===== */
+    // 复制邮箱到剪贴板
     function copyEmail() {
       navigator.clipboard.writeText('huxley@example.com')
         .then(() => alert('邮箱已复制到剪贴板'))
@@ -940,7 +995,7 @@
       downloadFiles(files);
     });
 
-    // Download files sequentially
+    // 顺序下载文件
     function downloadFiles(files) {
       function downloadNext(index) {
         if (index >= files.length) {
@@ -958,9 +1013,9 @@
       downloadNext(0);
     }
 
-    /* ===== INITIALIZATION ===== */
+    /* ===== 初始化 ===== */
     document.addEventListener('DOMContentLoaded', () => {
-      new BackgroundSystem(); // Start background animation
+      new BackgroundSystem(); // 启动背景动画
     });
   </script>
 </body>

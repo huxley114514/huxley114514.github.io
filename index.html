@@ -389,13 +389,13 @@
         <div class="mobile-controls" style="position: absolute; bottom: 20px; left: 0; right: 0; padding: 0 20px;">
           <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
             <div></div>
-            <button class="control-btn" onclick="handleControl('up', event)">↑</button>
+            <button class="control-btn" onclick="handleControl('up')">↑</button>
             <div></div>
-            <button class="control-btn" onclick="handleControl('left', event)">←</button>
+            <button class="control-btn" onclick="handleControl('left')">←</button>
             <div></div>
-            <button class="control-btn" onclick="handleControl('right', event)">→</button>
+            <button class="control-btn" onclick="handleControl('right')">→</button>
             <div></div>
-            <button class="control-btn" onclick="handleControl('down', event)">↓</button>
+            <button class="control-btn" onclick="handleControl('down')">↓</button>
             <div></div>
           </div>
         </div>
@@ -501,24 +501,9 @@
   window.addEventListener('load', initGameCanvas);
   window.addEventListener('resize', handleResize);
 
-  // 移动端控制按钮
-  function handleControl(dir, event) {
-    if(event) event.preventDefault(); // 防止按钮点击导致页面滚动
-    
-    if(!isPlaying) return;
-    
-    // 防止180度转弯的逻辑
-    const oppositeDirections = {
-      up: 'down',
-      down: 'up',
-      left: 'right',
-      right: 'left'
-    };
-    
-    // 只有当新方向不是当前方向的相反方向时才更新
-    if(dir !== oppositeDirections[direction]) {
-      nextDirection = dir;
-    }
+  function handleControl(direction) {
+    // 你的控制逻辑
+    console.log('控制方向:', direction);
   }
   </script>
 

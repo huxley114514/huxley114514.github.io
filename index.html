@@ -14,6 +14,8 @@
       --text-color: #000;       /* 默认文本颜色 */
       --nav-bg: rgba(0, 0, 0, 0.9); /* 导航背景 */
       --panel-bg: rgba(255, 255, 255, 0.15); /* 面板背景 */
+      --nav-text-color: #fff;
+      --nav-btn-bg: rgba(255, 255, 255, 0.1);
     }
 
     /* ===== 基础样式 ===== */
@@ -112,9 +114,14 @@
       align-items: center;
       width: 100%;
       padding: 16px 20px;
-      background: rgba(255, 255, 255, 0.1);
+
+      /*background: rgba(255, 255, 255, 0.1);*/
+      background: var(--nav-btn-bg);
+
       border-radius: 12px;
-      color: white;
+
+      /*color: white;*/
+
       border: none;
       font-family: 'Arial Rounded MT Bold', sans-serif;
       font-size: 1.1rem;
@@ -1211,6 +1218,8 @@
       
       if(mode === 'dark') {
         // 暗色主题设置
+        root.style.setProperty('--nav-text-color', '#fff');
+        root.style.setProperty('--nav-btn-bg', 'rgba(255, 255, 255, 0.1)');
         root.style.setProperty('--bg-color', 'rgba(0, 0, 0, 0.9)');
         root.style.setProperty('--text-color', '#fff');
         root.style.setProperty('--nav-bg', 'rgba(0, 0, 0, 0.95)');
@@ -1224,6 +1233,8 @@
         });
       } else {
         // 亮色主题设置
+        root.style.setProperty('--nav-text-color', '#000');
+        root.style.setProperty('--nav-btn-bg', 'rgba(0, 0, 0, 0.1)');
         root.style.setProperty('--bg-color', 'rgba(255, 255, 255, 0.9)');
         root.style.setProperty('--text-color', '#000');
         root.style.setProperty('--nav-bg', 'rgba(255, 255, 255, 0.95)');
@@ -1235,6 +1246,12 @@
         document.querySelectorAll('.menu-toggle span').forEach(span => {
           span.style.background = 'black';
         });
+      }
+
+      if(mode === 'dark') {
+        root.style.setProperty('--nav-bg', 'rgba(0, 0, 0, 0.95)');
+      } else {
+        root.style.setProperty('--nav-bg', 'rgba(255, 255, 255, 0.95)');
       }
     }
 

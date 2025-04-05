@@ -2,7 +2,7 @@
 <html>
 <head>
   <title>huxley的小站</title>
-  <link rel="icon" href="./image/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="./image/ico/favicon.ico" type="image/x-icon">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     /* ===== 主色调 ===== */
@@ -72,26 +72,26 @@
     .nav-container {
       position: fixed;
       top: 0;
-      left: -250px; /* 初始位置在屏幕外 */
+      left: -250px;
       width: 250px;
       height: 100vh;
       background: var(--nav-bg);
       backdrop-filter: blur(15px);
       z-index: 4;
       transition: all 0.3s ease;
-      overflow-y: auto; /* 如果内容超出高度则启用滚动 */
+      overflow-y: auto;
     }
 
     .nav-content {
-      padding: 60px 20px 20px; /* 顶部额外内边距用于菜单按钮 */
+      padding: 60px 20px 20px;
     }
 
     .nav-btn {
-      display: block;
+      display: flex;
+      align-items: center;
       width: 100%;
       margin: 10px 0;
-      text-align: left;
-      padding: 12px;
+      padding: 12px 15px; /* 增加水平内边距 */
       background: rgba(255,255,255,0.1);
       border-radius: 8px;
       color: white;
@@ -99,10 +99,42 @@
       font-family: inherit;
       font-weight: bold;
       cursor: pointer;
-      transition: transform 0.2s;
+      transition: all 0.2s ease; /* 改为all以包含所有属性 */
+      gap: 12px; /* 使用gap替代margin-right更现代 */
     }
+
+    .nav-icon {
+      width: 1.25rem; /* 使用rem单位 */
+      height: 1.25rem;
+      transition: all 0.3s ease;
+      filter: invert(1);
+      flex-shrink: 0; /* 防止图标被压缩 */
+    }
+
+    /* 暗色模式适配 - 需要确认是否使用.dark-mode类 */
+    [data-theme="dark"] .nav-icon,
+    .dark-mode .nav-icon {
+      filter: invert(0);
+    }
+
     .nav-btn:hover {
-      transform: translateX(5px); /* 微妙的悬停效果 */
+      transform: translateX(5px);
+      background: rgba(255,255,255,0.15); /* 添加悬停背景变化 */
+    }
+
+    .nav-btn:hover .nav-icon {
+      transform: scale(1.1); /* 图标悬停效果 */
+    }
+
+    /* 菜单按钮暗色模式适配 */
+    [data-theme="dark"] .menu-toggle,
+    .dark-mode .menu-toggle {
+      background: white;
+    }
+
+    [data-theme="dark"] .menu-toggle span,
+    .dark-mode .menu-toggle span {
+      background: black;
     }
 
     /* ===== 菜单切换按钮 ===== */
@@ -296,12 +328,35 @@
   <!-- 导航栏菜单 -->
   <div class="nav-container" id="navContainer">
     <div class="nav-content">
-      <button class="nav-btn" onclick="showPanel('home')">首页</button>
-      <button class="nav-btn" onclick="showPanel('game')">游戏中心</button>
-      <button class="nav-btn" onclick="showPanel('download')">下载中心</button>
-      <button class="nav-btn" onclick="showPanel('link')">常用网站</button>
-      <button class="nav-btn" onclick="showPanel('about')">关于我</button>
-      <button class="nav-btn" onclick="showPanel('new')">个性化设置</button>
+      <button class="nav-btn" onclick="showPanel('home')">
+        <img src="./image/svg/home.svg" class="nav-icon" alt="首页">
+        <span>首页</span>
+      </button>
+      
+      <button class="nav-btn" onclick="showPanel('game')">
+        <img src="./image/svg/gamepad.svg" class="nav-icon" alt="游戏">
+        <span>游戏中心</span>
+      </button>
+      
+      <button class="nav-btn" onclick="showPanel('download')">
+        <img src="./image/svg/download.svg" class="nav-icon" alt="下载">
+        <span>下载中心</span>
+      </button>
+      
+      <button class="nav-btn" onclick="showPanel('link')">
+        <img src="./image/svg/link.svg" class="nav-icon" alt="链接">
+        <span>常用网站</span>
+      </button>
+      
+      <button class="nav-btn" onclick="showPanel('about')">
+        <img src="./image/svg/user.svg" class="nav-icon" alt="关于">
+        <span>关于我</span>
+      </button>
+      
+      <button class="nav-btn" onclick="showPanel('new')">
+        <img src="./image/svg/settings.svg" class="nav-icon" alt="设置">
+        <span>个性化设置</span>
+      </button>
     </div>
   </div>
 
@@ -629,6 +684,23 @@
           </div>
           <a href="./downloads/kill_py.zip" class="download-btn" download>下载</a>
         </div>
+
+        <div class="list-item">
+          <div>
+            <h3 style="color: var(--primary); margin: 0;">谷歌小恐龙</h3>
+            <p style="color: #ccc; margin: 5px 0;">大小: 35MB</p>
+          </div>
+          <a href="./downloads/DinosaurBeta.zip" class="download-btn" download>下载</a>
+        </div>
+
+        <div class="list-item">
+          <div>
+            <h3 style="color: var(--primary); margin: 0;">PCL2</h3>
+            <p style="color: #ccc; margin: 5px 0;">大小: 3545KB</p>
+          </div>
+          <a href="./downloads/PlainCraftLauncher2.exe" class="download-btn" download>下载</a>
+        </div>
+
       </div>
       <button class="download-btn" onclick="hidePanels()" style="margin-top: 1rem; display: block; margin-left: auto; margin-right: auto;">关闭</button>
     </div>

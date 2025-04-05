@@ -2,6 +2,7 @@
 <html>
 <head>
   <title>huxley的小站</title>
+  <link rel="icon" href="./image/favicon.ico" type="image/x-icon">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     /* ===== 主色调 ===== */
@@ -364,7 +365,7 @@
       </div>
     </div>
   </div>
-
+    
   <!-- 游戏中心面板 -->
   <div class="overlay" id="gameOverlay">
     <div class="panel">
@@ -385,7 +386,6 @@
         </div>
         
         <!-- 手机控制按钮（修复版） -->
-
         <div class="mobile-controls" style="position: absolute; bottom: 20px; left: 0; right: 0; padding: 0 20px;">
           <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
             <div></div>
@@ -399,27 +399,31 @@
             <div></div>
           </div>
         </div>
-
       </div>
       
-      <!-- 游戏链接（下方） -->
-      <div style="text-align: center; margin-top: 20px;">
-        <a href="https://huxley114514.github.io/game/jdqs.html " 
-          class="download-btn" 
-          target="_blank">
-          游玩掘地求升
-        </a>
+      <!-- 游戏链接和下载按钮容器 -->
+      <div class="button-container" style="margin-top: 20px;">
+        <div class="button-row">
+          <a href="https://huxley114514.github.io/game/jdqs.html" 
+            class="download-btn" 
+            target="_blank">
+            游玩掘地求升
+          </a>
+          <a href="https://huxley114514.github.io/game/Apple.html" 
+            class="download-btn" 
+            target="_blank">
+            游玩apple
+          </a>
+        </div>
+        <div class="button-row">
+          <button class="download-btn" onclick="downloadGame('jdqs')">
+            下载掘地求升
+          </button>
+          <button class="download-btn" onclick="downloadGame('apple')">
+            下载apple
+          </button>
+        </div>
       </div>
-
-      <div style="text-align: center; margin-top: 20px;">
-        <a href="https://huxley114514.github.io/game/Apple.html " 
-          class="download-btn" 
-          target="_blank">
-          游玩apple
-        </a>
-      </div>
-
-      
     </div>
   </div>
 
@@ -436,6 +440,41 @@
     height: 400px;
     display: block;
     background: #000; /* 临时背景色，方便查看 */
+  }
+
+  /* 按钮容器样式 */
+  .button-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .button-row {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    width: 100%;
+  }
+
+  /* 下载按钮样式 */
+  .download-btn {
+    padding: 10px 20px;
+    background: rgba(255,255,255,0.2);
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.2s;
+    text-decoration: none;
+    text-align: center;
+    flex: 1;
+    max-width: 200px;
+  }
+
+  .download-btn:hover {
+    background: rgba(255,255,255,0.3);
   }
 
   /* 手机控制按钮样式 */
@@ -467,6 +506,16 @@
     
     .mobile-controls {
       display: block !important;
+    }
+    
+    .button-row {
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .download-btn {
+      max-width: 100%;
+      width: 100%;
     }
   }
   </style>
@@ -504,6 +553,34 @@
   function handleControl(direction) {
     // 你的控制逻辑
     console.log('控制方向:', direction);
+  }
+
+  function downloadGame(gameName) {
+    // 这里添加下载游戏的逻辑
+    console.log('下载游戏:', gameName);
+    // 示例: window.location.href = `games/${gameName}.zip`;
+    let fileUrl;
+    switch(gameName) {
+      case 'jdqs':
+        fileUrl = './game/downloads-game/jdqs.zip'; // 掘地求升
+        break;
+      case 'apple':
+        fileUrl = './game/downloads-game/apple.zip'; // Apple游戏
+        break;
+      default:
+        console.error('未知游戏:', gameName);
+        return;
+    }
+    
+    // 创建隐藏的<a>标签触发下载
+    const link = document.createElement('a');
+    link.href = fileUrl;
+    link.download = fileUrl.split('/').pop(); // 使用文件名作为下载属性
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+      // 临时提示
+    alert(`即将下载 ${gameName} 游戏`);
   }
   </script>
 

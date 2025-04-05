@@ -87,10 +87,10 @@
       transform: translateX(-100%);
       width: 280px; /* 稍加宽以容纳大图标 */
       height: 100vh;
-      background: rgba(0, 0, 0, 0.9);
+      background: var(--nav-bg);
       backdrop-filter: blur(15px);
       z-index: 1000;
-      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), backdrop-filter 0.4s;
       padding-top: 70px;
       overflow-y: auto;
     }
@@ -202,7 +202,7 @@
       z-index: 999;
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.3s ease;
+      transition: opacity 0.3s ease, backdrop-filter 0.3s;
     }
 
     .nav-overlay.active {
@@ -228,23 +228,6 @@
     }
 
     /* ===== 菜单切换按钮 ===== */
-    .menu-toggle {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      width: 30px;
-      height: 30px;
-      cursor: pointer;
-      z-index: 5;
-      background: white;
-      border-radius: 4px;
-      padding: 8px 5px;
-      box-sizing: border-box;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      transition: all 0.3s;
-    }
     .menu-toggle span {
       width: 100%;
       height: 3px;
@@ -1090,12 +1073,22 @@
     const menuToggle = document.getElementById('menuToggle');
     const navOverlay = document.getElementById('navOverlay');
 
+
     // 切换导航菜单
     function toggleNav() {
-      navContainer.classList.toggle('open');
+      const isOpen = navContainer.classList.toggle('open');
       menuToggle.classList.toggle('active');
       navOverlay.classList.toggle('active');
+
+      // 强制同步执行过渡动画
+      navContainer.style.transition = 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)';
+      if (isOpen) {
+        navContainer.style.transform = 'translateX(0)';
+      } else {
+        navContainer.style.transform = 'translateX(-100%)';
+      }
     }
+
 
     // 菜单按钮点击处理
     menuToggle.addEventListener('click', (e) => {
@@ -1112,6 +1105,7 @@
         navContainer.classList.remove('open');
         menuToggle.classList.remove('active');
         navOverlay.classList.remove('active');
+        navContainer.style.transform = 'translateX(-100%)';
       }
     });
 
@@ -1135,18 +1129,21 @@
         aboutContent.style.display = 'none';
       }
       
-      // 关闭导航菜单
-      toggleNav(); // 直接调用toggleNav而不是设置样式
+      // 关闭导航菜单（使用正确的toggleNav方式）
+      if (navContainer.classList.contains('open')) {
+        toggleNav();
+      }
     }
 
-    // 点击导航栏外部关闭
-    document.addEventListener('click', function(e) {
-      if (!navContainer.contains(e.target) && !menuToggle.contains(e.target)) {
-        navContainer.classList.remove('open');
-        menuToggle.classList.remove('active');
-        navOverlay.classList.remove('active');
-      }
-    });
+    // 隐藏所有面板并显示主内容
+    function hidePanels() {
+      document.querySelectorAll('.overlay').forEach(panel => {
+        panel.style.display = 'none';
+      });
+      document.getElementById('mainContent').style.display = 'block';
+      document.getElementById('aboutContent').style.display = 'none';
+    }
+
 
     /* ===== 游戏控制处理器 ===== */
     // 键盘控制
@@ -1175,30 +1172,7 @@
     });
 
     /* ===== 面板控制 ===== */
-    // 显示特定面板
-    function showPanel(type) {
-      hidePanels();
-      const mainContent = document.getElementById('mainContent');
-      const aboutContent = document.getElementById('aboutContent');
-      
-      if(type === 'home') {
-        mainContent.style.display = 'block';
-        aboutContent.style.display = 'none';
-      } 
-      else if(type === 'about') {
-        mainContent.style.display = 'none';
-        aboutContent.style.display = 'block';
-      }
-      else {
-        document.getElementById(`${type}Overlay`).style.display = 'block';
-        mainContent.style.display = 'none';
-        aboutContent.style.display = 'none';
-      }
-      
-      // 关闭导航菜单
-      navContainer.style.left = '-250px';
-      menuToggle.classList.remove('active');
-    }
+
 
     // 隐藏所有面板并显示主内容
     function hidePanels() {
@@ -1318,6 +1292,11 @@
 
     /* ===== 初始化 ===== */
     document.addEventListener('DOMContentLoaded', () => {
+      // 清除过渡属性避免冲突
+      navContainer.style.transition = '';
+      // 确保导航栏初始状态正确
+      navContainer.style.transform = 'translateX(-100%)'
+
       new BackgroundSystem(); // 启动背景动画
     });
   </script>
